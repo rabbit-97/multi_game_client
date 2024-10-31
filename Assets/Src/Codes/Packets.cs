@@ -28,6 +28,18 @@ public class Packets : MonoBehaviour
             throw;
         }
     }
+
+    private static T DeserializeJson<T>(string jjsonString)
+    {
+        return JsonUtility.FromJson<T>(jjsonString);
+    }
+
+    public static T ParsePayload<T>(byte[] data) {
+        string jsonString = Encoding.UTF8.GetString(data);
+
+        T response = DeserializeJson<T>(jsonString);
+        return response;
+    }
 }
 
 [ProtoContract]
@@ -103,4 +115,11 @@ public class Response {
 
     [ProtoMember(4)]
     public byte[] data { get; set; }
+}
+
+public class InitialResponse
+{
+    public string userId
+    public float x;
+    public float y;
 }

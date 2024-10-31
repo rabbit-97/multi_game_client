@@ -18,6 +18,10 @@ public class Player : MonoBehaviour
     Animator anim;
     TextMeshPro myText;
 
+    private Vector2 targetPosition;
+
+    private bool isTargetPositionSet = false;
+
     void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
@@ -56,15 +60,17 @@ public class Player : MonoBehaviour
         if (!GameManager.instance.isLive) {
             return;
         }
-        // 힘을 준다.
-        // rigid.AddForce(inputVec);
-
-        // 속도 제어
-        // rigid.velocity = inputVec;
-
+        if (isTargetPositionSet)
+        {
+            rigid.MovePosition(targetPosition);
+            isTargetPositionSet = false;
+        }
+        else
+        {
         // 위치 이동
         Vector2 nextVec = inputVec * speed * Time.fixedDeltaTime;
         rigid.MovePosition(rigid.position + nextVec);
+        }
     }
 
     // Update가 끝난이후 적용
@@ -84,5 +90,10 @@ public class Player : MonoBehaviour
         if (!GameManager.instance.isLive) {
             return;
         }
+    }
+
+    public void UpdatePositionFromServer(float x, float y) {
+        targetPosition = new Vector2(x, y);
+        isTargetPositionSet = true;
     }
 }
