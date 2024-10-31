@@ -4,6 +4,7 @@ using System.IO;
 using System.Buffers;
 using System.Collections.Generic;
 using System;
+using System.Text;
 
 public class Packets : MonoBehaviour
 {
@@ -119,7 +120,7 @@ public class Response {
 
 public class InitialResponse
 {
-    public string userId
+    public string userId;
     public float x;
     public float y;
 }

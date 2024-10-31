@@ -244,6 +244,11 @@ public class NetworkManager : MonoBehaviour
         }
     }
 
+    private void HandlePingPacket(byte[] packetData)
+    {
+        throw new NotImplementedException();
+    }
+
     void HandleNormalPacket(byte[] packetData) {
         // 패킷 데이터 처리
         var response = Packets.Deserialize<Response>(packetData);
