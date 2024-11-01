@@ -227,7 +227,7 @@ public class NetworkManager : MonoBehaviour
             byte[] packetData = incompleteData.GetRange(5, packetLength - 5).ToArray();
             incompleteData.RemoveRange(0, packetLength);
 
-            // Debug.Log($"Received packet: Length = {packetLength}, Type = {packetType}");
+            //Debug.Log($"Received packet: Length = {packetLength}, Type = {packetType}");
 
             switch (packetType)
             {
@@ -246,7 +246,8 @@ public class NetworkManager : MonoBehaviour
 
     private void HandlePingPacket(byte[] packetData)
     {
-        throw new NotImplementedException();
+        // 해당 위치 핑 로직 구현 필요
+        //throw new NotImplementedException();
     }
 
     void HandleNormalPacket(byte[] packetData) {
