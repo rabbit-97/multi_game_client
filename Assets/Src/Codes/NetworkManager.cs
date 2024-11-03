@@ -42,7 +42,7 @@ public class NetworkManager : MonoBehaviour
                     GameManager.instance.deviceId = GenerateUniqueID();
                 }
             }
-  
+
             if (ConnectToServer(ip, portNumber)) {
                 StartGame();
             } else {
@@ -244,11 +244,26 @@ public class NetworkManager : MonoBehaviour
         }
     }
 
-    private void HandlePingPacket(byte[] packetData)
+    async void HandlePingPacket(byte[] data)
     {
-        // 해당 위치 핑 로직 구현 필요
-        //throw new NotImplementedException();
+        // 타임스탬프 받음
+        // 바로 돌려줄 예정
+
+        // 헤더 생성
+        byte[] header = CreatePacketHeader(data.Length, Packets.PacketType.Ping);
+
+        // 패킷 생성
+        byte[] packet = new byte[header.Length + data.Length];
+        Array.Copy(header, 0, packet, 0, header.Length);
+        Array.Copy(data, 0, packet, header.Length, data.Length);
+
+        await Task.Delay(GameManager.instance.latency);
+
+        // 패킷 전송
+        stream.Write(packet, 0, packet.Length);
     }
+
+
 
     void HandleNormalPacket(byte[] packetData) {
         // 패킷 데이터 처리
